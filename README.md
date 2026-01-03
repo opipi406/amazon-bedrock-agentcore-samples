@@ -6,145 +6,144 @@
   </div>
 
   <h1>
-      Amazon Bedrock AgentCore Samples
+      Amazon Bedrock AgentCore サンプル集
   </h1>
 
   <h2>
-    Deploy and operate AI agents securely at scale - using any framework and model
+    どんなフレームワークやモデルでも、大規模かつ安全にAIエージェントをデプロイ＆運用
   </h2>
 
   <div align="center">
-    <a href="https://github.com/awslabs/amazon-bedrock-agentcore-samples/graphs/commit-activity"><img alt="GitHub commit activity" src="https://img.shields.io/github/commit-activity/m/awslabs/amazon-bedrock-agentcore-samples"/></a>
-    <a href="https://github.com/awslabs/amazon-bedrock-agentcore-samples/issues"><img alt="GitHub open issues" src="https://img.shields.io/github/issues/awslabs/amazon-bedrock-agentcore-samples"/></a>
-    <a href="https://github.com/awslabs/amazon-bedrock-agentcore-samples/pulls"><img alt="GitHub open pull requests" src="https://img.shields.io/github/issues-pr/awslabs/amazon-bedrock-agentcore-samples"/></a>
-    <a href="https://github.com/awslabs/amazon-bedrock-agentcore-samples/blob/main/LICENSE"><img alt="License" src="https://img.shields.io/github/license/awslabs/amazon-bedrock-agentcore-samples"/></a>
+    <a href="https://github.com/awslabs/amazon-bedrock-agentcore-samples/graphs/commit-activity"><img alt="GitHub コミットアクティビティ" src="https://img.shields.io/github/commit-activity/m/awslabs/amazon-bedrock-agentcore-samples"/></a>
+    <a href="https://github.com/awslabs/amazon-bedrock-agentcore-samples/issues"><img alt="GitHub オープンイシュー" src="https://img.shields.io/github/issues/awslabs/amazon-bedrock-agentcore-samples"/></a>
+    <a href="https://github.com/awslabs/amazon-bedrock-agentcore-samples/pulls"><img alt="GitHub オープンプルリクエスト" src="https://img.shields.io/github/issues-pr/awslabs/amazon-bedrock-agentcore-samples"/></a>
+    <a href="https://github.com/awslabs/amazon-bedrock-agentcore-samples/blob/main/LICENSE"><img alt="ライセンス" src="https://img.shields.io/github/license/awslabs/amazon-bedrock-agentcore-samples"/></a>
   </div>
   
   <p>
-    <a href="https://docs.aws.amazon.com/bedrock-agentcore/">Documentation</a>
+    <a href="https://docs.aws.amazon.com/bedrock-agentcore/">ドキュメント</a>
     ◆ <a href="https://github.com/aws/bedrock-agentcore-sdk-python">Python SDK</a>
-    ◆ <a href="https://github.com/aws/bedrock-agentcore-starter-toolkit">Starter Toolkit </a>
+    ◆ <a href="https://github.com/aws/bedrock-agentcore-starter-toolkit">スターターツールキット</a>
     ◆ <a href="https://discord.gg/bedrockagentcore-preview">Discord</a>
   </p>
 </div>
 
-Welcome to the Amazon Bedrock AgentCore Samples repository! 
+Amazon Bedrock AgentCore サンプルのリポジトリへようこそ！
 
-Amazon Bedrock AgentCore is both framework-agnostic and model-agnostic, giving you the flexibility to deploy and operate advanced AI agents securely and at scale. Whether you’re building with [Strands Agents](https://strandsagents.com/latest/), [CrewAI](https://www.crewai.com/), [LangGraph](https://www.langchain.com/langgraph), [LlamaIndex](https://www.llamaindex.ai/), or any other framework—and running them on any Large Language Model (LLM)—Amazon Bedrock AgentCore provides the infrastructure to support them. By eliminating the undifferentiated heavy lifting of building and managing specialized agent infrastructure, Amazon Bedrock AgentCore lets you bring your preferred framework and model, and deploy without rewriting code.
+Amazon Bedrock AgentCoreは、"フレームワーク非依存"および"モデル非依存"です。これにより、どんなフレームワークでも、どんな大規模言語モデル（LLM）でも、高度なAIエージェントを安全かつスケーラブルにデプロイ・運用できます。[Strands Agents](https://strandsagents.com/latest/)、[CrewAI](https://www.crewai.com/)、[LangGraph](https://www.langchain.com/langgraph)、[LlamaIndex](https://www.llamaindex.ai/)他、どんなフレームワーク／モデルでも動作対応可能。専用インフラの開発・運用という煩雑な作業を排し、お好みのフレームワーク／モデルをそのまま持ち込んで展開できます。
 
-This collection provides examples and tutorials to help you understand, implement, and integrate Amazon Bedrock AgentCore capabilities into your applications.
+本リポジトリは、Amazon Bedrock AgentCoreの導入・実装・活用のための例やチュートリアルを提供します。
 
-## 🎥 Video
+## 🎥 動画
 
-Build your first production-ready AI agent with Amazon Bedrock AgentCore. We’ll take you beyond prototyping and show you how to productionize your first agentic AI application using Amazon Bedrock AgentCore. 
+Amazon Bedrock AgentCoreで最初の本番用AIエージェントを構築しよう。プロトタイピングから一歩進み、AgentCoreを使ったエージェントAIアプリケーションの本番運用化までデモ動画でご紹介します。
 
 <p align="center">
   <a href="https://www.youtube.com/watch?v=wzIQDPFQx30"><img src="https://markdown-videos-api.jorgenkh.no/youtube/wzIQDPFQx30?width=640&height=360&filetype=jpeg" /></a>
 </p>
 
-## 📁 Repository Structure
+## 📁 リポジトリ構成
 
 ### 📚 [`01-tutorials/`](./01-tutorials/)
-**Interactive Learning & Foundation**
+**インタラクティブ学習 & 基礎**
 
-This folder contains notebook-based tutorials that teach you the fundamentals of Amazon Bedrock AgentCore capabilities through hands-on examples.
+このフォルダには、ノートブック形式でAgentCore機能の基礎から学べるチュートリアルが含まれています。
 
-The structure is divided by AgentCore component:
-* **[Runtime](./01-tutorials/01-AgentCore-runtime)**: Amazon Bedrock AgentCore Runtime is a secure, serverless runtime capability that empowers organizations to deploy and scale both AI agents and tools, regardless of framework, protocol, or model choice—enabling rapid prototyping, seamless scaling, and accelerated time to market
-* **[Gateway](./01-tutorials/02-AgentCore-gateway)**: AI agents need tools to perform real-world tasks—from searching databases to sending messages. Amazon Bedrock AgentCore Gateway automatically converts APIs, Lambda functions, and existing services into MCP-compatible tools so developers can quickly make these essential capabilities available to agents without managing integrations. 
-* **[Memory](./01-tutorials/04-AgentCore-memory)**: Amazon Bedrock AgentCore Memory makes it easy for developer to build rich, personalized agent experiences with fully-manged memory infrastructure and the ability to customize memory for your needs.
-* **[Identity](./01-tutorials/03-AgentCore-identity)**: Amazon Bedrock AgentCore Identity provides seamless agent identity and access management across AWS services and third-party applications such as Slack and Zoom while supporting any standard identity providers such as Okta, Entra, and Amazon Cognito.
-* **[Tools](./01-tutorials/05-AgentCore-tools)**: Amazon Bedrock AgentCore provides two built-in tools to simplify your agentic AI application development: Amazon Bedrock AgentCore **Code Interpreter** tool enables AI agents to write and execute code securely, enhancing their accuracy and expanding their ability to solve complex end-to-end tasks. Amazon Bedrock AgentCore **Browser Tool** is an enterprise-grade capability that enables AI agents to navigate websites, complete multi-step forms, and perform complex web-based tasks with human-like precision within a fully managed, secure sandbox environment with low latency
-* **[Observability](./01-tutorials/06-AgentCore-observability)**: Amazon Bedrock AgentCore Observability helps developers trace, debug, and monitor agent performance through unified operational dashboards. With support for OpenTelemetry compatible telemetry and detailed visualizations of each step of the agent workflow, Amazon Bedrock AgentCore Observability enables developers to easily gain visibility into agent behavior and maintain quality standards at scale.
+AgentCoreの各コンポーネントごとに構成されています：
 
-* **[AgentCore end-to-end](./01-tutorials/07-AgentCore-E2E)**: In this tutorial we will move a customer support agent from prototype to production using Amazon Bedrock AgentCore services.
+* **[Runtime](./01-tutorials/01-AgentCore-runtime)**: Amazon Bedrock AgentCore Runtimeは、どんなフレームワーク・プロトコル・モデルでも利用可能なセキュアなサーバーレス実行基盤です。AIエージェントやツールを迅速にプロトタイピングし、シームレスにスケール＆市場投入を加速します。
+* **[Gateway](./01-tutorials/02-AgentCore-gateway)**: エージェントは、データベース検索やメッセージ送信など現実世界のタスクを実行するためのツールが必要です。Bedrock AgentCore Gatewayは、API、Lambda、既存サービスをMCP対応ツールへ自動変換し、開発者は面倒な統合管理なしにエージェントが利用できる機能を瞬時に提供できます。
+* **[Memory](./01-tutorials/04-AgentCore-memory)**: Bedrock AgentCore Memoryにより、開発者はフルマネージドなメモリ基盤を活用して、豊かなパーソナライズドエージェント体験の構築と用途に応じたメモリカスタムが容易になります。
+* **[Identity](./01-tutorials/03-AgentCore-identity)**: Bedrock AgentCore Identityは、AWSサービスやSlack・Zoomなどサードパーティとのシームレスなエージェント識別・アクセス管理を実現。Okta、Entra、Amazon Cognitoなど標準IDプロバイダーもサポートしています。
+* **[Tools](./01-tutorials/05-AgentCore-tools)**: Bedrock AgentCoreには2つの組み込みツールがあります。**コードインタープリター**はAIエージェントが安全にコードを書いて実行できる機能で、精度と問題解決力を向上。**ブラウザツール**はAIエージェントがWebサイトをナビゲートし、多段階フォームや複雑作業を低遅延・完全分離のセキュアサンドボックス内で実行させます。
+* **[Observability](./01-tutorials/06-AgentCore-observability)**: AgentCore Observabilityにより、開発者は統一ダッシュボードからエージェントの性能をトレース・デバッグ・監視可能。OpenTelemetry互換のテレメトリやワークフローの詳細可視化で、品質基準の維持や動作分析も容易です。
+
+* **[AgentCore end-to-end](./01-tutorials/07-AgentCore-E2E)**: このチュートリアルでは、カスタマーサポートエージェントをプロトタイプから本番までBedrock AgentCoreサービスで段階的に構築します。
 
 
-The examples provided as perfect for beginners and those looking to understand the underlying concepts before building AI Agents applications.
+これらのサンプルは、初心者や基礎概念を学びたい方向けの内容です。
 
 ### 💡 [`02-use-cases/`](./02-use-cases/)
-**End-to-end Applications**
+**エンド・ツー・エンドアプリケーション**
 
-Explore practical use case implementations that demonstrate how to apply Amazon Bedrock AgentCore capabilities to solve real business problems.
+Bedrock AgentCoreを活用した現実的なビジネス課題解決のユースケースを体系的に解説しています。
 
-Each use case includes complete implementation focused on the AgentCore components with detailed explanations.
+各ユースケースはAgentCoreコンポーネントに集中した実装例と詳細解説付きです。
 
 ### 🔌 [`03-integrations/`](./03-integrations/)
-**Framework & Protocol Integration**
+**フレームワーク & プロトコル連携**
 
-Learn how to integrate Amazon Bedrock AgentCore capabilities with popular Agentic frameworks such as Strands Agents, LangChain and CrewAI.
+Strands Agents、LangChain、CrewAIなど人気のエージェントフレームワークとの連携方法を解説。
 
-Set agent-to-agent communication with A2A and different multi-agent collaboration patterns. Integrate agentic interfaces and learn how to use 
-Amazon Bedrock AgentCore with different entry points.
+A2Aによるエージェント間通信や各種マルチエージェント協調パターンの実現。入口を変えたエージェント連携手法も学べます。
 
 ### 🏗️ [`04-infrastructure-as-code/`](./04-infrastructure-as-code/)
-**Deployment Automation & Infrastructure**
+**デプロイ自動化・インフラコード化**
 
-Deploy Amazon Bedrock AgentCore resources Infrastructure as code. We are providing examples using CloudFormation, AWS CDK, or Terraform.
+Bedrock AgentCoreリソースをインフラ構成管理ツール（CloudFormation、AWS CDK、Terraform）で自動デプロイする例を掲載。
 
-Automate infrastructure provisioning with production-ready templates for basic runtimes, MCP servers, multi-agent systems, and complete agent solutions with tools and memory.
+基本ランタイム、MCPサーバー、マルチエージェントシステム、ツール・メモリ統合型など各種プロダクション用テンプレートあり。
 
 ### 🚀 [`05-blueprints/`](./05-blueprints/)
-**Full-Stack Reference Applications**
+**フルスタック・リファレンスアプリケーション**
 
-Jump-start your development with complete, deployment-ready agentic applications built on Amazon Bedrock AgentCore.
+Bedrock AgentCore上に構築された、すぐにデプロイできる実践的なエージェントAIアプリ例集。
 
-Each blueprint provides a comprehensive foundation with integrated services, authentication, and business logic that you can customize and deploy for your use case.
+各ブループリントは、サービス統合／認証／ビジネスロジックまで組み込み済みの基盤として活用できます。
 
-## Running a Notebook
+## ノートブックの実行手順
 
-1. Create and activate a virtual environment
+1. 仮想環境の作成・有効化
 ```bash
 python -m venv .venv
 source .venv/bin/activate
 ```
 
-2. Install dependencies
+2. 依存パッケージのインストール
 ```bash
 pip install -r requirements.txt
 ```
 
-3. Export/Activate required AWS Credentials for the notebook to run
+3. ノートブック実行に必要なAWS認証情報をエクスポートまたは有効化
 
-4. Register your virtual environment as a kernel for Jupyter notebook to use
+4. Jupyterノートブック用に仮想環境をカーネルとして登録
 ```bash
 python -m ipykernel install --user --name=notebook-venv --display-name="Python (notebook-venv)"
 ```
 
-You can list your kernels using:
+カーネルの一覧は以下で確認できます：
 ```bash
 jupyter kernelspec list
 ```
 
-5. Run the notebook and ensure the correct kernel is selected
+5. ノートブックを実行し、正しいカーネルを選択
 ```bash
 jupyter notebook path/to/your/notebook.ipynb
 ```
 
-**Important:** After opening the notebook in Jupyter, make sure to select the correct kernel by going to `Kernel` → `Change kernel` → select "Python (notebook-venv)" to ensure your virtual environment packages are available.
+**重要:** Jupyterでノートブックを開いた後、「カーネル」→「カーネルの変更」→「Python (notebook-venv)」を選択し、仮想環境のパッケージを利用できるようにしてください。
 
+## クイックスタート - [Amazon Bedrock AgentCore Runtime](https://github.com/aws/bedrock-agentcore-starter-toolkit/blob/main/documentation/docs/user-guide/runtime/quickstart.md)
 
-## Quick Start - [Amazon Bedrock AgentCore Runtime](https://github.com/aws/bedrock-agentcore-starter-toolkit/blob/main/documentation/docs/user-guide/runtime/quickstart.md)
+### ステップ1: 前提条件
 
-### Step 1: Prerequisites
+- [AWSアカウント](https://signin.aws.amazon.com/signin?redirect_uri=https%3A%2F%2Fportal.aws.amazon.com%2Fbilling%2Fsignup%2Fresume&client_id=signup) の作成＆`aws configure`による認証情報設定
+- [Python 3.10](https://www.python.org/downloads/) 以上
+- [Docker](https://www.docker.com/) または [Finch](https://runfinch.com/) のインストール（ローカル開発時のみ）
+- モデルアクセス：Amazon BedrockコンソールでAnthropic Claude 4.0が有効になっていること（[設定方法](https://docs.aws.amazon.com/bedrock/latest/userguide/model-access-modify.html)）
+- AWS権限：
+    - `BedrockAgentCoreFullAccess` マネージドポリシー
+    - `AmazonBedrockFullAccess` マネージドポリシー
+    - `Caller 権限`: 詳細は[こちら](https://github.com/aws/bedrock-agentcore-starter-toolkit/blob/main/documentation/docs/user-guide/runtime/permissions.md#developercaller-permissions)
 
-- An [AWS account](https://signin.aws.amazon.com/signin?redirect_uri=https%3A%2F%2Fportal.aws.amazon.com%2Fbilling%2Fsignup%2Fresume&client_id=signup) with credentials configured (`aws configure`)
-- [Python 3.10](https://www.python.org/downloads/) or later
-- [Docker](https://www.docker.com/) or [Finch](https://runfinch.com/) installed and running - only for local development
-- Model Access: Anthropic Claude 4.0 enabled in [Amazon Bedrock console](https://docs.aws.amazon.com/bedrock/latest/userguide/model-access-modify.html)
-- AWS Permissions:
-    - `BedrockAgentCoreFullAccess` managed policy
-    - `AmazonBedrockFullAccess` managed policy
-    - `Caller permissions`: See detailed policy [here](https://github.com/aws/bedrock-agentcore-starter-toolkit/blob/main/documentation/docs/user-guide/runtime/permissions.md#developercaller-permissions)
-
-### Step 2: Install and Create Your Agent
+### ステップ2: エージェントの作成・インストール
 
 ```bash
-# Install both packages
+# 必要なパッケージ両方をインストール
 pip install bedrock-agentcore strands-agents bedrock-agentcore-starter-toolkit
 ```
 
-Create `my_agent.py`:
+`my_agent.py` を作成：
 
 ```python
 from bedrock_agentcore import BedrockAgentCoreApp
@@ -155,15 +154,15 @@ agent = Agent()
 
 @app.entrypoint
 def invoke(payload):
-    """Your AI agent function"""
-    user_message = payload.get("prompt", "Hello! How can I help you today?")
+    """AIエージェントのメイン関数"""
+    user_message = payload.get("prompt", "こんにちは！どのようなご用件でしょうか？")
     result = agent(user_message)
     return {"result": result.message}
 
 if __name__ == "__main__":
     app.run()
 ```
-Create `requirements.txt`:
+`requirements.txt` を作成：
 
 ```bash
 cat > requirements.txt << EOF
@@ -171,57 +170,56 @@ bedrock-agentcore
 strands-agents
 EOF
 ```
-### Step 3: Test Locally
+### ステップ3: ローカルでテスト
 
 ```bash
-# Start your agent
+# エージェントを起動
 python my_agent.py
 
-# Test it (in another terminal)
+# （別ターミナルで）テスト送信
 curl -X POST http://localhost:8080/invocations \
   -H "Content-Type: application/json" \
-  -d '{"prompt": "Hello!"}'
+  -d '{"prompt": "こんにちは!"}'
 ```
-Success: You should see a response like {"result": "Hello! I'm here to help..."}
+成功すると次のような応答が返ります：{"result": "こんにちは！お手伝いします..."}
 
-### Step 4: Deploy to AWS
+### ステップ4: AWSへデプロイ
 
 ```bash
-# Configure and deploy (auto-creates all required resources)
+# 設定とデプロイ（必要なリソースを自動作成）
 agentcore configure -e my_agent.py
 agentcore launch
 
-# Test your deployed agent
-agentcore invoke '{"prompt": "tell me a joke"}'
+# デプロイ済みエージェントのテスト
+agentcore invoke '{"prompt": "ジョークを言って"}'
 ```
 
-Congratulations! Your agent is now running on Amazon Bedrock AgentCore Runtime!
+おめでとうございます！エージェントがAmazon Bedrock AgentCore Runtime上で稼働しています。
 
-Follow quickstart guides for [Gateway](https://github.com/aws/bedrock-agentcore-starter-toolkit/blob/main/documentation/docs/user-guide/gateway/quickstart.md), [Identity](https://github.com/aws/bedrock-agentcore-starter-toolkit/blob/main/documentation/docs/user-guide/identity/quickstart.md), [Memory](https://github.com/aws/bedrock-agentcore-starter-toolkit/blob/main/documentation/docs/user-guide/memory/quickstart.md), [Observability](https://github.com/aws/bedrock-agentcore-starter-toolkit/blob/main/documentation/docs/user-guide/observability/quickstart.md), and [builtin-tools](https://github.com/aws/bedrock-agentcore-starter-toolkit/tree/main/documentation/docs/user-guide/builtin-tools). 
+[Gateway](https://github.com/aws/bedrock-agentcore-starter-toolkit/blob/main/documentation/docs/user-guide/gateway/quickstart.md)・[Identity](https://github.com/aws/bedrock-agentcore-starter-toolkit/blob/main/documentation/docs/user-guide/identity/quickstart.md)・[Memory](https://github.com/aws/bedrock-agentcore-starter-toolkit/blob/main/documentation/docs/user-guide/memory/quickstart.md)・[Observability](https://github.com/aws/bedrock-agentcore-starter-toolkit/blob/main/documentation/docs/user-guide/observability/quickstart.md)・[組み込みツール](https://github.com/aws/bedrock-agentcore-starter-toolkit/tree/main/documentation/docs/user-guide/builtin-tools)のガイドもどうぞ。
 
-## 🔗 Related Links:
+## 🔗 関連リンク
 
-- [Getting started with Amazon Bedrock AgentCore - Workshop](https://catalog.us-east-1.prod.workshops.aws/workshops/850fcd5c-fd1f-48d7-932c-ad9babede979/en-US)
-- [Diving Deep into Bedrock AgentCore - Workshop](https://catalog.workshops.aws/agentcore-deep-dive/en-US)
-- [Amazon Bedrock AgentCore pricing](https://aws.amazon.com/bedrock/agentcore/pricing/)
-- [Amazon Bedrock AgentCore FAQs](https://aws.amazon.com/bedrock/agentcore/faqs/)
+- [Amazon Bedrock AgentCore はじめてのワークショップ (英語)](https://catalog.us-east-1.prod.workshops.aws/workshops/850fcd5c-fd1f-48d7-932c-ad9babede979/en-US)
+- [AgentCore Deep Dive ワークショップ](https://catalog.workshops.aws/agentcore-deep-dive/en-US)
+- [Amazon Bedrock AgentCore 料金](https://aws.amazon.com/bedrock/agentcore/pricing/)
+- [Amazon Bedrock AgentCore よくある質問](https://aws.amazon.com/bedrock/agentcore/faqs/)
 
-## 🤝 Contributing
+## 🤝 コントリビューション（貢献）
 
-We welcome contributions! Please see our [Contributing Guidelines](CONTRIBUTING.md) for details on:
+皆様のご貢献をお待ちしています！[コントリビューションガイドライン](CONTRIBUTING.md)で以下を説明しています。
 
-- Adding new samples
-- Improving existing examples
-- Reporting issues
-- Suggesting enhancements
-
-
-## 📄 License
-
-This project is licensed under the Apache License 2.0 - see the [LICENSE](LICENSE) file for details.
+- 新しいサンプルの追加
+- 既存例の改善
+- 問題報告
+- 改善提案
 
 
-## Contributors
+## 📄 ライセンス
+
+このプロジェクトはApache License 2.0で提供されています。[LICENSE](LICENSE)ファイルをご確認ください。
+
+## コントリビューター
 
 <a href="https://github.com/awslabs/amazon-bedrock-agentcore-samples/graphs/contributors">
   <img src="https://contrib.rocks/image?repo=awslabs/amazon-bedrock-agentcore-samples" />

@@ -1,39 +1,39 @@
-# Hosting LangGraph agent with Amazon Bedrock models in Amazon Bedrock AgentCore Runtime
+# Amazon Bedrock AgentCore Runtime で Amazon Bedrock モデルを使用した LangGraph エージェントのホスティング
 
-## Overview
+## 概要
 
-In this tutorial we will learn how to host your existing agent, using Amazon Bedrock AgentCore Runtime. 
+このチュートリアルでは、Amazon Bedrock AgentCore Runtime を使用して既存のエージェントをホスティングする方法を学習します。
 
-We will focus on a LangGraph with Amazon Bedrock model example. For Strands Agents with Amazon Bedrock model check [here](../01-strands-with-bedrock-model)
-and for a Strands Agents with an OpenAI model check [here](../03-strands-with-openai-model).
+Amazon Bedrock モデルを使用した LangGraph の例に焦点を当てます。Amazon Bedrock モデルを使用した Strands Agents については[こちら](../01-strands-with-bedrock-model)を確認してください。
+OpenAI モデルを使用した Strands Agents については[こちら](../03-strands-with-openai-model)を確認してください。
 
-### Tutorial Details
+### チュートリアルの詳細
 
-| Information         | Details                                                                      |
-|:--------------------|:-----------------------------------------------------------------------------|
-| Tutorial type       | Conversational                                                               |
-| Agent type          | Single                                                                       |
-| Agentic Framework   | LangGraph                                                                    |
-| LLM model           | Anthropic Claude Haiku 4.5                                                    |
-| Tutorial components | Hosting agent on AgentCore Runtime. Using LangGraph and Amazon Bedrock Model |
-| Tutorial vertical   | Cross-vertical                                                               |
-| Example complexity  | Easy                                                                         |
-| SDK used            | Amazon BedrockAgentCore Python SDK and boto3                                 |
+| 情報                     | 詳細                                                                      |
+|:-------------------------|:-------------------------------------------------------------------------|
+| チュートリアルタイプ       | 会話型                                                                    |
+| エージェントタイプ         | 単一                                                                      |
+| エージェントフレームワーク | LangGraph                                                                |
+| LLM モデル               | Anthropic Claude Haiku 4.5                                                |
+| チュートリアルコンポーネント | AgentCore Runtime でのエージェントのホスティング。LangGraph と Amazon Bedrock モデルの使用 |
+| チュートリアル垂直領域     | クロス垂直                                                                 |
+| 例の複雑さ               | 簡単                                                                      |
+| 使用 SDK                 | Amazon BedrockAgentCore Python SDK と boto3                              |
 
-### Tutorial Architecture
+### チュートリアルアーキテクチャ
 
-In this tutorial we will describe how to deploy an existing agent to AgentCore runtime. 
+このチュートリアルでは、既存のエージェントを AgentCore runtime にデプロイする方法について説明します。
 
-For demonstration purposes, we will  use a LangGraph agent using Amazon Bedrock models
+デモンストレーションの目的で、Amazon Bedrock モデルを使用する LangGraph エージェントを使用します。
 
-In our example we will use a very simple agent with two tools: `get_weather` and `get_time`. 
+この例では、`get_weather` と `get_time` の2つのツールを持つ非常にシンプルなエージェントを使用します。
 
 <div style="text-align:left">
     <img src="images/architecture_runtime.png" width="100%"/>
 </div>
 
-### Tutorial Key Features
+### チュートリアルの主な機能
 
-* Hosting Agents on Amazon Bedrock AgentCore Runtime
-* Using Amazon Bedrock models
-* Using LangGraph
+* Amazon Bedrock AgentCore Runtime でのエージェントのホスティング
+* Amazon Bedrock モデルの使用
+* LangGraph の使用

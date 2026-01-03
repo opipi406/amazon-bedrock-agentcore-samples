@@ -1,40 +1,39 @@
-# Hosting Strands Agents with OpenAI models in Amazon Bedrock AgentCore Runtime
+# Amazon Bedrock AgentCore Runtime で OpenAI モデルを使用した Strands Agents のホスティング
 
-## Overview
+## 概要
 
-In this tutorial we will learn how to host your existing agent, using Amazon Bedrock AgentCore Runtime. 
+このチュートリアルでは、Amazon Bedrock AgentCore Runtime を使用して既存のエージェントをホスティングする方法を学習します。
 
-We will focus on a Strands Agents with OpenAI model example. For Strands Agents with Amazon Bedrock model check [here](../01-strands-with-bedrock-model) and 
-for LangGraph with Amazon Bedrock model check [here](../02-langgraph-with-bedrock-model)
+OpenAI モデルを使用した Strands Agents の例に焦点を当てます。Amazon Bedrock モデルを使用した Strands Agents については[こちら](../01-strands-with-bedrock-model)を確認してください。
+Amazon Bedrock モデルを使用した LangGraph については[こちら](../02-langgraph-with-bedrock-model)を確認してください。
 
+### チュートリアルの詳細
 
-### Tutorial details
+| 情報                     | 詳細                                                                  |
+|:-------------------------|:----------------------------------------------------------------------|
+| チュートリアルタイプ       | 会話型                                                                |
+| エージェントタイプ         | 単一                                                                  |
+| エージェントフレームワーク | Strands Agents                                                       |
+| LLM モデル               | GPT 4.1 mini                                                          |
+| チュートリアルコンポーネント | AgentCore Runtime でのエージェントのホスティング。Strands Agent と OpenAI モデルの使用 |
+| チュートリアル垂直領域     | クロス垂直                                                            |
+| 例の複雑さ               | 簡単                                                                  |
+| 使用 SDK                 | Amazon BedrockAgentCore Python SDK と boto3                          |
 
-| Information         | Details                                                                  |
-|:--------------------|:-------------------------------------------------------------------------|
-| Tutorial type       | Conversational                                                           |
-| Agent type          | Single                                                                   |
-| Agentic Framework   | Strands Agents                                                           |
-| LLM model           | GPT 4.1 mini                                                             |
-| Tutorial components | Hosting agent on AgentCore Runtime. Using Strands Agent and OpenAI Model |
-| Tutorial vertical   | Cross-vertical                                                           |
-| Example complexity  | Easy                                                                     |
-| SDK used            | Amazon BedrockAgentCore Python SDK and boto3                             |
+### チュートリアルアーキテクチャ
 
-### Tutorial Architecture
+このチュートリアルでは、既存のエージェントを AgentCore runtime にデプロイする方法について説明します。
 
-In this tutorial we will describe how to deploy an existing agent to AgentCore runtime. 
+デモンストレーションの目的で、Amazon Bedrock モデルを使用する Strands Agent を使用します。
 
-For demonstration purposes, we will  use a Strands Agent using Amazon Bedrock models
-
-In our example we will use a very simple agent with two tools: `get_weather` and `get_time`. 
+この例では、`get_weather` と `get_time` の2つのツールを持つ非常にシンプルなエージェントを使用します。
 
 <div style="text-align:left">
     <img src="images/architecture_runtime.png" width="100%"/>
 </div>
 
-### Tutorial key Features
+### チュートリアルの主な機能
 
-* Hosting Agents on Amazon Bedrock AgentCore Runtime
-* Using OpenAI models
-* Using Strands Agents
+* Amazon Bedrock AgentCore Runtime でのエージェントのホスティング
+* OpenAI モデルの使用
+* Strands Agents の使用
