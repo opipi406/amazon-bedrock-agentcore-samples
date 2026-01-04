@@ -1,50 +1,50 @@
-# Hosting MCP server on AgentCore Runtime
+# AgentCore Runtime上でのMCPサーバーのホスティング
 
-## Overview
+## 概要
 
-In this session we will discuss how to host MCP tools on Amazon Bedrock AgentCore Runtime.
+このセッションでは、Amazon Bedrock AgentCore Runtime上でMCPツールをホスティングする方法について説明します。
 
-We will use the Amazon Bedrock AgentCore Python SDK to wrapper the agents function as an MCP server compatible with Amazon Bedrock AgentCore.
-It will handle the MCP server details so you can focus on your agent's core functionality.
+Amazon Bedrock AgentCore Python SDKを使用して、エージェントの機能をAmazon Bedrock AgentCoreと互換性のあるMCPサーバーとしてラップします。
+MCPサーバーの詳細を処理するため、エージェントのコア機能に集中できます。
 
-The Amazon Bedrock AgentCore Python SDK prepares your agent or tool code to run on AgentCore Runtime. 
+Amazon Bedrock AgentCore Python SDKは、エージェントまたはツールコードをAgentCore Runtime上で実行できるように準備します。
 
-It will transform your code into the AgentCore standardized HTTP protocol or MCP protocol contracts to allow for direct REST API endpoint communication for a traditional request/response pattern (HTTP protocol) or Model Context Protocol for tools and agents servers (MCP Protocol).
+コードをAgentCore標準化されたHTTPプロトコルまたはMCPプロトコルコントラクトに変換し、従来のリクエスト/レスポンスパターン（HTTPプロトコル）の直接REST APIエンドポイント通信、またはツールおよびエージェントサーバー用のModel Context Protocol（MCPプロトコル）を可能にします。
 
-When you are hosting tools, the Amazon Bedrock AgentCore Python SDK will implement the [Stateless Streamable HTTP] transport protocol with the `MCP-Session-Id` header for [session isolation]https://modelcontextprotocol.io/specification/2025-06-18/basic/transports#session-management, servers must support stateless operation to not reject platform generated Mcp-Session-Id header.
-Your MCP server will then be hosted on port `8000` and will provide one invocation path: the `mcp-POST`. This interaction endpoint with receive the MCP RPC messages and process them through your tool's capabilities. It supports both  application/json and text/event-stream as response content-types.
+ツールをホスティングする際、Amazon Bedrock AgentCore Python SDKは[セッション分離](https://modelcontextprotocol.io/specification/2025-06-18/basic/transports#session-management)のための`MCP-Session-Id`ヘッダーを使用して[Stateless Streamable HTTP](https://modelcontextprotocol.io/specification/2025-06-18/basic/transports#stateless-streamable-http)トランスポートプロトコルを実装します。サーバーは、プラットフォームが生成したMcp-Session-Idヘッダーを拒否しないように、ステートレス操作をサポートする必要があります。
+MCPサーバーはポート`8000`でホスティングされ、1つの呼び出しパス`mcp-POST`を提供します。この対話エンドポイントはMCP RPCメッセージを受信し、ツールの機能を通じて処理します。レスポンスのコンテンツタイプとして`application/json`と`text/event-stream`の両方をサポートします。
 
-When you set your AgentCore protocol to MCP, AgentCore Runtime will expect the MCP server container to be on path `0.0.0.0:8000/mcp` as that's the default path supported by most of the official MCP server SDKs.
+AgentCoreプロトコルをMCPに設定すると、AgentCore RuntimeはMCPサーバーコンテナがパス`0.0.0.0:8000/mcp`上にあることを期待します。これは、公式のMCPサーバーSDKのほとんどがサポートするデフォルトパスです。
 
-AgentCore Runtime requires you to host stateless streamable-http servers because it provides session-isolation by default and automatically adds a Mcp-Session-Id header for any request without it, so MCP clients can have continuity of connection to same Bedrock AgentCore Runtime session ID. 
+AgentCore Runtimeは、デフォルトでセッション分離を提供し、それがないリクエストに対して自動的にMcp-Session-Idヘッダーを追加するため、ステートレスストリーミング可能なHTTPサーバーをホスティングする必要があります。これにより、MCPクライアントは同じBedrock AgentCore RuntimeセッションIDへの接続の継続性を持つことができます。
 
-Payload of `InvokeAgentRuntime` API is completely pass through, so RPC messages of protocols like MCP can easily be proxied.
+`InvokeAgentRuntime` APIのペイロードは完全にパススルーされるため、MCPのようなプロトコルのRPCメッセージを簡単にプロキシできます。
 
-In this tutorial you will learn:
+このチュートリアルでは、以下を学習します：
 
-* How to create an MCP server with tools
-* How to test your server locally
-* How to deploy your server to AWS
-* How to invoke your deployed server
+* ツール付きのMCPサーバーの作成方法
+* サーバーのローカルテスト方法
+* AWSへのサーバーのデプロイ方法
+* デプロイされたサーバーの呼び出し方法
 
-### Tutorial Details
+### チュートリアルの詳細
 
-| Information         | Details                                                   |
-|:--------------------|:----------------------------------------------------------|
-| Tutorial type       | Hosting Tools                                             |
-| Tool type           | MCP server                                                |
-| Tutorial components | Hosting tool on AgentCore Runtime. Creating an MCP server |
-| Tutorial vertical   | Cross-vertical                                            |
-| Example complexity  | Easy                                                      |
-| SDK used            | Amazon BedrockAgentCore Python SDK and MCP Client         |
+| 情報               | 詳細                                                       |
+|:-------------------|:-----------------------------------------------------------|
+| チュートリアルタイプ | ツールのホスティング                                       |
+| ツールタイプ       | MCPサーバー                                                |
+| チュートリアル構成要素 | AgentCore Runtime上でのツールのホスティング。MCPサーバーの作成 |
+| チュートリアル垂直領域 | クロス垂直領域                                             |
+| 例の複雑さ         | 簡単                                                       |
+| 使用SDK            | Amazon BedrockAgentCore Python SDKおよびMCP Client         |
 
-### Tutorial Architecture
-In this tutorial we will describe how to deploy an existing MCP server to AgentCore runtime. 
+### チュートリアルアーキテクチャ
+このチュートリアルでは、既存のMCPサーバーをAgentCore runtimeにデプロイする方法について説明します。
 
-For demonstration purposes, we will use a very simple MCP server with 3 tools: `add_numbers`, `multiply_numbers` and `greet_users`
+デモンストレーションの目的で、3つのツールを持つ非常にシンプルなMCPサーバーを使用します：`add_numbers`、`multiply_numbers`、`greet_users`
 
-![MCP architecture](images/hosting_mcp_server.png)
+![MCPアーキテクチャ](images/hosting_mcp_server.png)
 
-### Tutorial Key Features
+### チュートリアルの主な機能
 
-* Hosting MCP Server
+* MCPサーバーのホスティング
