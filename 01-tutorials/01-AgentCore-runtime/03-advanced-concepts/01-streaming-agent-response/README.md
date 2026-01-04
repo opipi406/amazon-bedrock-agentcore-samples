@@ -1,40 +1,40 @@
-# Streaming Responses with Strands Agents and Amazon Bedrock models in Amazon Bedrock AgentCore Runtime
+# Amazon Bedrock AgentCore Runtime での Strands Agents と Amazon Bedrock モデルを使用したストリーミング応答
 
-## Overview
+## 概要
 
-In this tutorial we will learn how to implement streaming responses using Amazon Bedrock AgentCore Runtime with your existing agents. 
+このチュートリアルでは、既存のエージェントを使用して Amazon Bedrock AgentCore Runtime でストリーミング応答を実装する方法を学習します。
 
-We will focus on a Strands Agents with Amazon Bedrock model example that demonstrates real-time streaming capabilities. 
+リアルタイムストリーミング機能を示す、Amazon Bedrock モデルを使用した Strands Agents の例に焦点を当てます。
 
-### Tutorial Details
+### チュートリアルの詳細
 
-| Information         | Details                                                                          |
+| 情報         | 詳細                                                                          |
 |:--------------------|:---------------------------------------------------------------------------------|
-| Tutorial type       | Conversational with Streaming                                                    |
-| Agent type          | Single                                                                           |
-| Agentic Framework   | Strands Agents                                                                   |
-| LLM model           | Anthropic Claude Haiku 4.5                                                      |
-| Tutorial components | Streaming responses with AgentCore Runtime. Using Strands Agent and Amazon Bedrock Model |
-| Tutorial vertical   | Cross-vertical                                                                   |
-| Example complexity  | Easy                                                                             |
-| SDK used            | Amazon BedrockAgentCore Python SDK and boto3                                     |
+| チュートリアルタイプ       | ストリーミング付き会話型                                                    |
+| エージェントタイプ          | 単一                                                                           |
+| エージェントフレームワーク   | Strands Agents                                                                   |
+| LLM モデル           | Anthropic Claude Haiku 4.5                                                      |
+| チュートリアルコンポーネント | AgentCore Runtime を使用したストリーミング応答。Strands Agent と Amazon Bedrock Model の使用 |
+| チュートリアル垂直領域   | クロス垂直                                                                   |
+| 例の複雑さ  | 簡単                                                                             |
+| 使用するSDK            | Amazon BedrockAgentCore Python SDK と boto3                                     |
 
-### Tutorial Architecture
+### チュートリアルアーキテクチャ
 
-In this tutorial we will describe how to deploy a streaming agent to AgentCore runtime. 
+このチュートリアルでは、ストリーミングエージェントを AgentCore runtime にデプロイする方法について説明します。
 
-For demonstration purposes, we will use a Strands Agent using Amazon Bedrock models with streaming capabilities.
+デモンストレーションの目的で、ストリーミング機能を備えた Amazon Bedrock モデルを使用する Strands Agent を使用します。
 
-In our example we will use a simple agent with three tools: `get_weather`, `get_time`, and `calculator`, but enhanced with real-time streaming response capabilities.
+この例では、`get_weather`、`get_time`、`calculator` の3つのツールを持つシンプルなエージェントを使用しますが、リアルタイムストリーミング応答機能が強化されています。
 
 <div style="text-align:left">
     <img src="images/architecture_runtime.png" width="100%"/>
 </div>
 
-### Tutorial Key Features
+### チュートリアルの主な機能
 
-* Implementing streaming responses on Amazon Bedrock AgentCore Runtime
-* Real-time partial result delivery using Server-Sent Events (SSE)
-* Using Amazon Bedrock models with streaming capabilities
-* Using Strands Agents with async streaming support
-* Enhanced user experience with progressive response display
+* Amazon Bedrock AgentCore Runtime でのストリーミング応答の実装
+* Server-Sent Events (SSE) を使用したリアルタイム部分結果配信
+* ストリーミング機能を備えた Amazon Bedrock モデルの使用
+* 非同期ストリーミングサポートを備えた Strands Agents の使用
+* 段階的な応答表示によるユーザー体験の向上

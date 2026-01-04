@@ -1,45 +1,45 @@
-# Understanding Runtime Context and Session Management in AgentCore Runtime
+# AgentCore Runtime でのランタイムコンテキストとセッション管理の理解
 
-## Overview
+## 概要
 
-In this tutorial, we will learn how to understand and work with runtime context and session management in Amazon Bedrock AgentCore Runtime. This example demonstrates how AgentCore Runtime handles sessions, maintains context across multiple invocations, and how agents can access runtime information through the context object.
+このチュートリアルでは、Amazon Bedrock AgentCore Runtime でのランタイムコンテキストとセッション管理を理解し、操作する方法を学習します。この例では、AgentCore Runtime がセッションを処理し、複数の呼び出しにわたってコンテキストを維持し、エージェントがコンテキストオブジェクトを通じてランタイム情報にアクセスする方法を示します。
 
-Amazon Bedrock AgentCore Runtime provides isolated sessions for each user interaction, enabling agents to maintain context and state across multiple invocations while ensuring complete security isolation between different users.
+Amazon Bedrock AgentCore Runtime は、各ユーザーインタラクションに対して分離されたセッションを提供し、異なるユーザー間で完全なセキュリティ分離を確保しながら、エージェントが複数の呼び出しにわたってコンテキストと状態を維持できるようにします。
 
-### Tutorial Details
+### チュートリアルの詳細
 
-|Information| Details|
+|情報| 詳細|
 |:--------------------|:---------------------------------------------------------------------------------|
-| Tutorial type       | Context and Session Management|
-| Agent type          | Single         |
-| Agentic Framework   | Strands Agents |
-| LLM model           | Anthropic Claude Haiku 4.5 |
-| Tutorial components | Runtime Context, Session Management, AgentCore Runtime, Strands Agent and Amazon Bedrock Model |
-| Tutorial vertical   | Cross-vertical                                                                   |
-| Example complexity  | Intermediate                                                                     |
-| SDK used            | Amazon BedrockAgentCore Python SDK and boto3|
+| チュートリアルタイプ       | コンテキストとセッション管理|
+| エージェントタイプ          | 単一         |
+| エージェントフレームワーク   | Strands Agents |
+| LLM モデル           | Anthropic Claude Haiku 4.5 |
+| チュートリアルコンポーネント | ランタイムコンテキスト、セッション管理、AgentCore Runtime、Strands Agent と Amazon Bedrock Model |
+| チュートリアル垂直領域   | クロス垂直                                                                   |
+| 例の複雑さ  | 中級                                                                     |
+| 使用するSDK            | Amazon BedrockAgentCore Python SDK と boto3|
 
-### Tutorial Architecture
+### チュートリアルアーキテクチャ
 
-In this tutorial, we will explore how Amazon Bedrock AgentCore Runtime manages sessions and provides context to agents. We'll demonstrate:
+このチュートリアルでは、Amazon Bedrock AgentCore Runtime がセッションを管理し、エージェントにコンテキストを提供する方法を探ります。以下を実演します：
 
-1. **Session Continuity**: How the same session ID maintains context across multiple invocations
-2. **Context Object**: How agents can access runtime information through the context parameter
-3. **Session Isolation**: How different session IDs create completely isolated environments
-4. **Payload Flexibility**: How to pass custom data to agents through the payload
+1. **セッション継続性**: 同じセッション ID が複数の呼び出しにわたってコンテキストを維持する方法
+2. **コンテキストオブジェクト**: エージェントがコンテキストパラメータを通じてランタイム情報にアクセスする方法
+3. **セッション分離**: 異なるセッション ID が完全に分離された環境を作成する方法
+4. **ペイロードの柔軟性**: ペイロードを通じてカスタムデータをエージェントに渡す方法
 
-For demonstration purposes, we will use a Strands Agent that showcases these session management capabilities.
+デモンストレーションの目的で、これらのセッション管理機能を示す Strands Agent を使用します。
 
     
 <div style="text-align:left">
     <img src="images/architecture_runtime.png" width="60%"/>
 </div>
 
-### Tutorial Key Features
+### チュートリアルの主な機能
 
-* **Session-based Context Management**: Understanding how AgentCore Runtime maintains context within sessions
-* **Runtime Session Lifecycle**: Learning about session creation, maintenance, and termination
-* **Context Object Access**: Accessing runtime information like session ID through the context parameter
-* **Session Isolation**: Demonstrating how different sessions provide complete isolation
-* **Payload Handling**: Flexible data passing through custom payload structures
-* **Cross-invocation State**: Maintaining agent state across multiple calls within the same session
+* **セッションベースのコンテキスト管理**: AgentCore Runtime がセッション内でコンテキストを維持する方法の理解
+* **ランタイムセッションライフサイクル**: セッションの作成、維持、終了についての学習
+* **コンテキストオブジェクトへのアクセス**: コンテキストパラメータを通じてセッション ID などのランタイム情報にアクセス
+* **セッション分離**: 異なるセッションが完全な分離を提供する方法の実演
+* **ペイロード処理**: カスタムペイロード構造を通じた柔軟なデータ受け渡し
+* **呼び出し間の状態**: 同じセッション内の複数の呼び出しにわたるエージェント状態の維持

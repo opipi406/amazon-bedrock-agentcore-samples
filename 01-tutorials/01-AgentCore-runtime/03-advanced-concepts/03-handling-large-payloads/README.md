@@ -1,25 +1,25 @@
-# Handling Large Multi-Modal Payloads in AgentCore Runtime
+# AgentCore Runtime での大きなマルチモーダルペイロードの処理
 
-## Overview
+## 概要
 
-This tutorial demonstrates how Amazon Bedrock AgentCore Runtime handles large payloads up to 100MB, including multi-modal content such as Excel files and images. AgentCore Runtime is designed to process rich media content and large datasets seamlessly.
+このチュートリアルでは、Excel ファイルや画像などのマルチモーダルコンテンツを含む、最大 100MB の大きなペイロードを Amazon Bedrock AgentCore Runtime がどのように処理するかを示します。AgentCore Runtime は、リッチメディアコンテンツと大きなデータセットをシームレスに処理するように設計されています。
 
-### Tutorial Details
+### チュートリアルの詳細
 
-| Information         | Details                                                      |
+| 情報         | 詳細                                                      |
 |:--------------------|:-------------------------------------------------------------|
-| Tutorial type       | Large Payload & Multi-Modal Processing                       |
-| Agent type          | Single                                                       |
-| Agentic Framework   | Strands Agents                                               |
-| LLM model           | Anthropic Claude Haiku 4.5                                    |
-| Tutorial components | Large File Processing, Image Analysis, Excel Data Processing |
-| Tutorial vertical   | Data Analysis & Multi-Modal AI                               |
-| Example complexity  | Intermediate                                                 |
-| SDK used            | Amazon BedrockAgentCore Python SDK                           |
+| チュートリアルタイプ       | 大きなペイロードとマルチモーダル処理                       |
+| エージェントタイプ          | 単一                                                       |
+| エージェントフレームワーク   | Strands Agents                                               |
+| LLM モデル           | Anthropic Claude Haiku 4.5                                    |
+| チュートリアルコンポーネント | 大きなファイル処理、画像分析、Excel データ処理 |
+| チュートリアル垂直領域   | データ分析とマルチモーダル AI                               |
+| 例の複雑さ  | 中級                                                 |
+| 使用するSDK            | Amazon BedrockAgentCore Python SDK                           |
 
-### Key Features
+### 主な機能
 
-* **Large Payload Support**: Process files up to 100MB in size
-* **Multi-Modal Processing**: Handle Excel files, images, and text simultaneously
-* **Data Analysis**: Extract insights from structured data and visual content
-* **Base64 Encoding**: Secure transmission of binary data through JSON payloads
+* **大きなペイロードサポート**: 最大 100MB のファイルを処理
+* **マルチモーダル処理**: Excel ファイル、画像、テキストを同時に処理
+* **データ分析**: 構造化データと視覚コンテンツからインサイトを抽出
+* **Base64 エンコーディング**: JSON ペイロードを通じたバイナリデータの安全な送信

@@ -1,35 +1,35 @@
-# Distributed Multi-agent Solution using Amazon Bedrock AgentCore
+# Amazon Bedrock AgentCore を使用した分散マルチエージェントソリューション
 
-## Overview
+## 概要
 
-In this tutorial we will learn how to independently host agents each in their own Bedrock AgentCore Runtime and built with different Agentic Frameworks. We'll then enable communication between them for a distributed multi-agent solution. 
+このチュートリアルでは、各エージェントを独自の Bedrock AgentCore Runtime に独立してホストし、異なるエージェントフレームワークで構築する方法を学習します。その後、分散マルチエージェントソリューションのためにそれらの間の通信を有効にします。
 
-In this example we'll create:
-1. A technical agent (tech_agent) that is specialized in answering technical questions about programming and tech troubleshooting.
-2. A HR agent (hr_agent) that is specialized in company benefits.
-3. An orchestrator agent (orchestrator_agent) that routes questions to the technical or HR agent.
+この例では、以下を作成します：
+1. プログラミングや技術的なトラブルシューティングに関する技術的な質問に答えることに特化した技術エージェント（tech_agent）
+2. 会社の福利厚生に特化した HR エージェント（hr_agent）
+3. 質問を技術エージェントまたは HR エージェントにルーティングするオーケストレーターエージェント（orchestrator_agent）
 
-Putting these three agents together you get a multi-agent configuration with a supervisor, which can route user questions to the appropriate subagent. This system is capable of answering a range of questions an employee might have at a company.
+これら3つのエージェントを組み合わせることで、ユーザーの質問を適切なサブエージェントにルーティングできるスーパーバイザーを持つマルチエージェント構成が得られます。このシステムは、従業員が会社で持つ可能性のある幅広い質問に答えることができます。
 
-## Tutorial Details
+## チュートリアルの詳細
 
-| Information         | Details                                                                          |
+| 情報         | 詳細                                                                          |
 |:--------------------|:---------------------------------------------------------------------------------|
-| Tutorial type       | Conversational                                                                   |
-| Agent type          | Multi-Agent (Supervisor calling agents as tools)                                 |
-| Agentic Framework   | Strands Agents & LangGraph                                                       |
-| LLM model           | Anthropic Claude Haiku 4.5                                                      |
-| Tutorial components | Hosting agents on AgentCore Runtime and enable multi-agent collaboration         |
-| Tutorial vertical   | Cross-vertical                                                                   |
-| Example complexity  | Medium                                                                           |
-| SDK used            | Amazon BedrockAgentCore Python SDK and boto3                                     |
+| チュートリアルタイプ       | 会話型                                                                   |
+| エージェントタイプ          | マルチエージェント（ツールとしてエージェントを呼び出すスーパーバイザー）                                 |
+| エージェントフレームワーク   | Strands Agents & LangGraph                                                       |
+| LLM モデル           | Anthropic Claude Haiku 4.5                                                      |
+| チュートリアルコンポーネント | AgentCore Runtime でエージェントをホストし、マルチエージェントコラボレーションを有効化         |
+| チュートリアル垂直領域   | クロス垂直                                                                   |
+| 例の複雑さ  | 中程度                                                                           |
+| 使用するSDK            | Amazon BedrockAgentCore Python SDK と boto3                                     |
 
-## Tutorial Architecture
+## チュートリアルアーキテクチャ
 
 <div style="text-align:left">
     <img src="architecture.png" width="100%"/>
 </div>
 
-## Getting Started
+## はじめに
 
-Follow the instructions on this notebook [distributed_agents_with_agentcore.ipynb](distributed_agents_with_agentcore.ipynb) 
+このノートブック [distributed_agents_with_agentcore.ipynb](distributed_agents_with_agentcore.ipynb) の手順に従ってください 
