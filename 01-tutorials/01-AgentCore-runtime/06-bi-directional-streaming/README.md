@@ -1,111 +1,112 @@
-# Amazon Bedrock AgentCore - Bidirectional WebSocket Samples
+# Amazon Bedrock AgentCore - 双方向WebSocketサンプル
 
-This repository contains sample implementations demonstrating bidirectional WebSocket communication with Amazon Bedrock AgentCore:
+このリポジトリには、Amazon Bedrock AgentCoreとの双方向WebSocket通信を実証するサンプル実装が含まれています：
 
-- **Sonic** - Native Amazon Nova Sonic Python WebSocket implementation deployed directly to AgentCore. Provides full control over the Nova Sonic protocol with direct event handling. Includes a web client for testing real-time audio conversations with voice selection and interruption support.
+- **Sonic** - AgentCoreに直接デプロイされるネイティブAmazon Nova Sonic Python WebSocket実装。直接イベント処理によるNova Sonicプロトコルの完全な制御を提供します。音声選択と割り込みサポートを備えたリアルタイム音声会話をテストするためのWebクライアントが含まれています。
 
-- **Strands** - High-level framework implementation using the Strands BidiAgent for simplified real-time audio conversations. Built on top of Nova Sonic with automatic session management, tool integration, and a streamlined API. Perfect for rapid prototyping and production applications that benefit from framework abstractions.
+- **Strands** - 簡略化されたリアルタイム音声会話のためにStrands BidiAgentを使用した高レベルフレームワーク実装。自動セッション管理、ツール統合、合理化されたAPIを備えたNova Sonic上に構築されています。フレームワーク抽象化の恩恵を受ける迅速なプロトタイピングと本番アプリケーションに最適です。
 
-- **Echo** - Simple echo server for testing WebSocket connectivity and authentication without AI features.
+- **Echo** - AI機能なしでWebSocket接続と認証をテストするためのシンプルなエコーサーバー。
 
-All samples use a unified setup and cleanup process through the root `setup.sh` and `cleanup.sh` scripts.
+すべてのサンプルは、ルートの`setup.sh`と`cleanup.sh`スクリプトを通じて統一されたセットアップとクリーンアッププロセスを使用します。
 
-## Prerequisites
+## 前提条件
 
-- AWS CLI configured with appropriate permissions
+- 適切な権限で設定されたAWS CLI
 - Python 3.12+
-- Docker (for building custom agent images)
-- AWS Account ID
+- Docker（カスタムエージェントイメージをビルドするため）
+- AWSアカウントID
 
 ---
 
-## Sonic Sample - Native Nova Sonic 2 Implementation
+## Sonicサンプル - ネイティブNova Sonic 2実装
 
-This sample deploys a **native Amazon Nova Sonic 2 Python WebSocket server** directly to AgentCore. It provides full control over the Nova Sonic protocol with direct event handling, giving you complete visibility into session management, audio streaming, and response generation.
+このサンプルは、**ネイティブAmazon Nova Sonic 2 Python WebSocketサーバー**をAgentCoreに直接デプロイします。直接イベント処理によるNova Sonicプロトコルの完全な制御を提供し、セッション管理、オーディオストリーミング、応答生成の完全な可視性を提供します。
 
-**Architecture:** 
+**アーキテクチャ：**
 
 ![AgentCore Sonic Architecture](./images/agentcore-sonic-architecture.png)
 
-**Best for:** Production applications requiring real-time audio conversations with fine-grained control over session management and event handling.
+**最適な用途：** セッション管理とイベント処理のきめ細かい制御を必要とするリアルタイム音声会話の本番アプリケーション。
 
-### Setup
+### セットアップ
 
 ```bash
-# Required
+# 必須
 export ACCOUNT_ID=your_aws_account_id
 
-# Optional - customize these or use defaults
+# オプション - これらをカスタマイズするか、デフォルトを使用
 export AWS_REGION=us-east-1
 export IAM_ROLE_NAME=WebSocketSonicAgentRole
 export ECR_REPO_NAME=agentcore_sonic_images
 export AGENT_NAME=websocket_sonic_agent
 
-# AWS Authentication (choose one method):
+# AWS認証（いずれかの方法を選択）：
 
-# Method 1: Using AWS Profile (recommended)
-# Set AWS_PROFILE environment variable OR ensure your default profile has proper access
+# 方法1: AWSプロファイルを使用（推奨）
+# AWS_PROFILE環境変数を設定するか、デフォルトプロファイルに適切なアクセス権があることを確認
 export AWS_PROFILE=your_profile_name
 
-# Method 2: Using AWS credentials directly
+# 方法2: AWS認証情報を直接使用
 # export AWS_ACCESS_KEY_ID=your_access_key
 # export AWS_SECRET_ACCESS_KEY=your_secret_key
-# export AWS_SESSION_TOKEN=your_session_token  # Optional, for temporary credentials
+# export AWS_SESSION_TOKEN=your_session_token  # オプション、一時的な認証情報の場合
 
-# Run setup
+# セットアップを実行
 ./setup.sh sonic
 ```
 
-### Run the Client
+### クライアントの実行
 
-**Option 1: Using the start script (recommended)**
+**オプション1: スタートスクリプトを使用（推奨）**
 ```bash
 ./start_client.sh sonic
 ```
 
-**Option 2: Manual start**
+**オプション2: 手動起動**
 ```bash
-# Export environment variables (from setup output)
+# 環境変数をエクスポート（セットアップ出力から）
 export AWS_REGION="us-east-1"
 
-# AWS Authentication (choose one method):
-# Set AWS_PROFILE environment variable OR ensure your default profile has proper access
+# AWS認証（いずれかの方法を選択）：
+# AWS_PROFILE環境変数を設定するか、デフォルトプロファイルに適切なアクセス権があることを確認
 export AWS_PROFILE=your_profile_name
-# OR
+# または
 # export AWS_ACCESS_KEY_ID=your_access_key
 # export AWS_SECRET_ACCESS_KEY=your_secret_key
-# export AWS_SESSION_TOKEN=your_session_token  # Optional
+# export AWS_SESSION_TOKEN=your_session_token  # オプション
 
-# Start the web client
+# Webクライアントを起動
 python sonic/client/client.py --runtime-arn "<agent-arn-from-setup>"
 ```
 
-The web client will:
-1. Open automatically in your browser
-2. Request microphone access
-3. Enable real-time audio conversation with the AI
+Webクライアントは以下を実行します：
+1. ブラウザで自動的に開く
+2. マイクへのアクセスを要求
+3. AIとのリアルタイム音声会話を有効化
 
-### Features
+### 機能
 
-- **Real-time audio streaming** - Speak naturally and get immediate responses
-- **Voice selection** - Choose from multiple voices across different languages (English, French, Italian, German, Spanish)
-- **Dynamic voice switching** - Change voices during an active conversation
-- **Interruption support** - Barge-in capability to interrupt the assistant mid-response
-- **Tool integration** - Includes a sample `getDateTool` that responds to questions like "What time is it?" or "What day is today?"
-- **Web-based UI** - No installation required, works in any modern browser
-- **Session management** - Automatic session handling and audio buffering
-- **Event logging** - See all WebSocket events in real-time with filtering capability
-### Sample Tool: getDateTool
+- **リアルタイムオーディオストリーミング** - 自然に話しかけて即座に応答を得る
+- **音声選択** - 複数の言語（英語、フランス語、イタリア語、ドイツ語、スペイン語）から複数の音声を選択
+- **動的音声切り替え** - アクティブな会話中に音声を変更
+- **割り込みサポート** - アシスタントの応答中に割り込むバージイン機能
+- **ツール統合** - 「今何時ですか？」や「今日は何日ですか？」などの質問に応答するサンプル`getDateTool`を含む
+- **WebベースのUI** - インストール不要、任意のモダンブラウザで動作
+- **セッション管理** - 自動セッション処理とオーディオバッファリング
+- **イベントログ** - フィルタリング機能付きでリアルタイムにすべてのWebSocketイベントを表示
 
-The Sonic implementation includes a working example of tool integration. The `getDateTool` demonstrates how to:
-- Define a tool in the client configuration ([`sonic/client/sonic-client.html`](sonic/client/sonic-client.html#L617-L628))
-- Send tool configuration during session setup ([`sonic/client/sonic-client.html`](sonic/client/sonic-client.html#L773-L784))
-- Handle tool invocations on the server ([`sonic/websocket/s2s_session_manager.py`](sonic/websocket/s2s_session_manager.py#L339-L342))
-- Return results back to the conversation flow
+### サンプルツール: getDateTool
 
-**Try it:** Ask questions like "What time is it?" or "What's today's date?" and the assistant will invoke the tool to get the current UTC date and time.
+Sonic実装には、ツール統合の動作例が含まれています。`getDateTool`は以下を実証します：
+- クライアント設定でツールを定義する（[`sonic/client/sonic-client.html`](sonic/client/sonic-client.html#L617-L628)）
+- セッションセットアップ中にツール設定を送信する（[`sonic/client/sonic-client.html`](sonic/client/sonic-client.html#L773-L784)）
+- サーバーでツール呼び出しを処理する（[`sonic/websocket/s2s_session_manager.py`](sonic/websocket/s2s_session_manager.py#L339-L342)）
+- 結果を会話フローに戻す
 
-### Cleanup
+**試してみる：** 「今何時ですか？」や「今日の日付は？」などの質問をすると、アシスタントがツールを呼び出して現在のUTC日時を取得します。
+
+### クリーンアップ
 
 ```bash
 ./cleanup.sh sonic
@@ -113,86 +114,86 @@ The Sonic implementation includes a working example of tool integration. The `ge
 
 ---
 
-## Strands Sample - Framework-Based Implementation
+## Strandsサンプル - フレームワークベースの実装
 
-This sample demonstrates using the **Strands BidiAgent framework** for real-time audio conversations with Amazon Nova Sonic. Strands provides a high-level abstraction that simplifies bidirectional streaming, automatic session management, and tool integration.
+このサンプルは、Amazon Nova Sonicを使用したリアルタイム音声会話のために**Strands BidiAgentフレームワーク**を使用することを実証します。Strandsは、双方向ストリーミング、自動セッション管理、ツール統合を簡素化する高レベル抽象化を提供します。
 
-**Architecture:**
+**アーキテクチャ：**
 
-The Strands implementation uses the BidiAgent framework to handle the complexity of WebSocket communication, audio streaming, and tool orchestration automatically.
+Strands実装は、BidiAgentフレームワークを使用して、WebSocket通信、オーディオストリーミング、ツールオーケストレーションの複雑さを自動的に処理します。
 
-**Best for:** Rapid prototyping and production applications that benefit from framework abstractions while maintaining full Nova Sonic capabilities.
+**最適な用途：** 完全なNova Sonic機能を維持しながら、フレームワーク抽象化の恩恵を受ける迅速なプロトタイピングと本番アプリケーション。
 
-### Setup
+### セットアップ
 
 ```bash
-# Required
+# 必須
 export ACCOUNT_ID=your_aws_account_id
 
-# Optional - customize these or use defaults
+# オプション - これらをカスタマイズするか、デフォルトを使用
 export AWS_REGION=us-east-1
 export IAM_ROLE_NAME=WebSocketStrandsAgentRole
 export ECR_REPO_NAME=agentcore_strands_images
 export AGENT_NAME=websocket_strands_agent
 
-# AWS Authentication (choose one method):
+# AWS認証（いずれかの方法を選択）：
 
-# Method 1: Using AWS Profile (recommended)
-# Set AWS_PROFILE environment variable OR ensure your default profile has proper access
+# 方法1: AWSプロファイルを使用（推奨）
+# AWS_PROFILE環境変数を設定するか、デフォルトプロファイルに適切なアクセス権があることを確認
 export AWS_PROFILE=your_profile_name
 
-# Method 2: Using AWS credentials directly
+# 方法2: AWS認証情報を直接使用
 # export AWS_ACCESS_KEY_ID=your_access_key
 # export AWS_SECRET_ACCESS_KEY=your_secret_key
-# export AWS_SESSION_TOKEN=your_session_token  # Optional, for temporary credentials
+# export AWS_SESSION_TOKEN=your_session_token  # オプション、一時的な認証情報の場合
 
-# Run setup
+# セットアップを実行
 ./setup.sh strands
 ```
 
-### Run the Client
+### クライアントの実行
 
-**Option 1: Using the start script (recommended)**
+**オプション1: スタートスクリプトを使用（推奨）**
 ```bash
 ./start_client.sh strands
 ```
 
-**Option 2: Manual start**
+**オプション2: 手動起動**
 ```bash
-# Export environment variables (from setup output)
+# 環境変数をエクスポート（セットアップ出力から）
 export AWS_REGION="us-east-1"
 
-# AWS Authentication (choose one method):
-# Set AWS_PROFILE environment variable OR ensure your default profile has proper access
+# AWS認証（いずれかの方法を選択）：
+# AWS_PROFILE環境変数を設定するか、デフォルトプロファイルに適切なアクセス権があることを確認
 export AWS_PROFILE=your_profile_name
-# OR
+# または
 # export AWS_ACCESS_KEY_ID=your_access_key
 # export AWS_SECRET_ACCESS_KEY=your_secret_key
-# export AWS_SESSION_TOKEN=your_session_token  # Optional
+# export AWS_SESSION_TOKEN=your_session_token  # オプション
 
-# Start the web client
+# Webクライアントを起動
 python strands/client/client.py --runtime-arn "<agent-arn-from-setup>"
 ```
 
-The web client will:
-1. Open automatically in your browser
-2. Request microphone access
-3. Enable real-time audio conversation with the AI
+Webクライアントは以下を実行します：
+1. ブラウザで自動的に開く
+2. マイクへのアクセスを要求
+3. AIとのリアルタイム音声会話を有効化
 
-### Sample Tool: Calculator
+### サンプルツール: 電卓
 
-The Strands implementation includes a calculator tool that demonstrates framework-based tool integration. The tool can perform basic arithmetic operations.
+Strands実装には、フレームワークベースのツール統合を実証する電卓ツールが含まれています。このツールは基本的な算術演算を実行できます。
 
-**Try it:** Ask questions like "What is 25 times 4?" or "Calculate 100 divided by 5" and the assistant will use the calculator tool.
+**試してみる：** 「25かける4は？」や「100を5で割った値を計算して」などの質問をすると、アシスタントが電卓ツールを使用します。
 
-### Key Differences from Sonic Sample
+### Sonicサンプルとの主な違い
 
-- **Abstraction level:** Strands provides higher-level APIs vs. Sonic's direct protocol control
-- **Code complexity:** Strands requires less boilerplate for session management
-- **Tool integration:** Framework handles tool orchestration automatically
-- **Flexibility:** Sonic offers more fine-grained control over events and responses
+- **抽象化レベル：** Strandsは高レベルAPIを提供し、Sonicは直接プロトコル制御を提供
+- **コードの複雑さ：** Strandsはセッション管理のボイラープレートが少ない
+- **ツール統合：** フレームワークがツールオーケストレーションを自動的に処理
+- **柔軟性：** Sonicはイベントと応答のよりきめ細かい制御を提供
 
-### Cleanup
+### クリーンアップ
 
 ```bash
 ./cleanup.sh strands
@@ -200,71 +201,72 @@ The Strands implementation includes a calculator tool that demonstrates framewor
 
 ---
 
-## Echo Sample - WebSocket Testing
+## Echoサンプル - WebSocketテスト
 
-A simple echo server for testing WebSocket connectivity and authentication.
+WebSocket接続と認証をテストするためのシンプルなエコーサーバー。
 
-### Setup
+### セットアップ
 
 ```bash
-# Required
+# 必須
 export ACCOUNT_ID=your_aws_account_id
 
-# Optional - customize these or use defaults
+# オプション - これらをカスタマイズするか、デフォルトを使用
 export AWS_REGION=us-east-1
 export IAM_ROLE_NAME=WebSocketEchoAgentRole
 export DOCKER_REPO_NAME=agentcore_echo_images
 export AGENT_NAME=websocket_echo_agent
 
-# AWS Authentication (choose one method):
+# AWS認証（いずれかの方法を選択）：
 
-# Method 1: Using AWS Profile (recommended)
-# Set AWS_PROFILE environment variable OR ensure your default profile has proper access
+# 方法1: AWSプロファイルを使用（推奨）
+# AWS_PROFILE環境変数を設定するか、デフォルトプロファイルに適切なアクセス権があることを確認
 export AWS_PROFILE=your_profile_name
 
-# Method 2: Using AWS credentials directly
+# 方法2: AWS認証情報を直接使用
 # export AWS_ACCESS_KEY_ID=your_access_key
 # export AWS_SECRET_ACCESS_KEY=your_secret_key
-# export AWS_SESSION_TOKEN=your_session_token  # Optional, for temporary credentials
+# export AWS_SESSION_TOKEN=your_session_token  # オプション、一時的な認証情報の場合
 
-# Run setup
+# セットアップを実行
 ./setup.sh echo
 ```
 
-### Run the Client
+### クライアントの実行
 
-**Option 1: Using the start script (recommended)**
+**オプション1: スタートスクリプトを使用（推奨）**
 ```bash
 ./start_client.sh echo
 ```
 
-**Option 2: Manual start**
+**オプション2: 手動起動**
 ```bash
-# Export environment variables (from setup output)
+# 環境変数をエクスポート（セットアップ出力から）
 export AWS_REGION="us-east-1"
 
-# AWS Authentication (choose one method):
-# Set AWS_PROFILE environment variable OR ensure your default profile has proper access
+# AWS認証（いずれかの方法を選択）：
+# AWS_PROFILE環境変数を設定するか、デフォルトプロファイルに適切なアクセス権があることを確認
 export AWS_PROFILE=your_profile_name
-# OR
+# または
 # export AWS_ACCESS_KEY_ID=your_access_key
 # export AWS_SECRET_ACCESS_KEY=your_secret_key
-# export AWS_SESSION_TOKEN=your_session_token  # Optional
+# export AWS_SESSION_TOKEN=your_session_token  # オプション
 
-# Test with SigV4 headers authentication
+# SigV4ヘッダー認証でテスト
 python echo/client/client.py --runtime-arn "<agent-arn-from-setup>" --auth-type headers
 
-# Test with SigV4 query parameters
+# SigV4クエリパラメータでテスト
 python echo/client/client.py --runtime-arn "<agent-arn-from-setup>" --auth-type query
 ```
-### Features
 
-- **Simple echo** - Sends a message and verifies the echo response
-- **Multiple auth methods** - Test SigV4 headers or query parameters
-- **Connection testing** - Verify WebSocket connectivity
-- **Minimal dependencies** - Great for debugging
+### 機能
 
-### Expected Output
+- **シンプルなエコー** - メッセージを送信してエコー応答を検証
+- **複数の認証方法** - SigV4ヘッダーまたはクエリパラメータをテスト
+- **接続テスト** - WebSocket接続を検証
+- **最小限の依存関係** - デバッグに最適
+
+### 期待される出力
 
 ```
 WebSocket connected
@@ -273,7 +275,7 @@ Received: {"msg": "Hello, World! Echo Test"}
 Echo test PASSED
 ```
 
-### Cleanup
+### クリーンアップ
 
 ```bash
 ./cleanup.sh echo
@@ -281,65 +283,65 @@ Echo test PASSED
 
 ---
 
-## How Deployment Works
+## デプロイメントの仕組み
 
-The `setup.sh` script automates the complete deployment:
+`setup.sh`スクリプトは完全なデプロイメントを自動化します：
 
-1. **Prerequisites Check** - Validates jq, Python 3, Docker, and AWS CLI are installed
-2. **Python Environment** - Creates a virtual environment and installs dependencies
-3. **Docker Build & Push** - Builds ARM64 container image and pushes to Amazon ECR
-4. **IAM Role** - Creates role with permissions for ECR, CloudWatch, Bedrock, and X-Ray
-5. **Agent Runtime** - Deploys the WebSocket server to Bedrock AgentCore
-6. **Configuration** - Saves deployment details to `setup_config.json` for cleanup
+1. **前提条件のチェック** - jq、Python 3、Docker、AWS CLIがインストールされていることを検証
+2. **Python環境** - 仮想環境を作成して依存関係をインストール
+3. **Dockerビルドとプッシュ** - ARM64コンテナイメージをビルドしてAmazon ECRにプッシュ
+4. **IAMロール** - ECR、CloudWatch、Bedrock、X-Rayの権限を持つロールを作成
+5. **エージェントランタイム** - WebSocketサーバーをBedrock AgentCoreにデプロイ
+6. **設定** - クリーンアップのためにデプロイメント詳細を`setup_config.json`に保存
 
-After deployment, you'll have an ECR repository, IAM role, running agent runtime, and configuration file for easy cleanup.
+デプロイメント後、ECRリポジトリ、IAMロール、実行中のエージェントランタイム、および簡単なクリーンアップのための設定ファイルが作成されます。
 
 ---
 
-## Files Structure
+## ファイル構造
 
 ```
 .
-├── setup.sh                       # Unified setup script (takes folder parameter)
-├── start_client.sh                # Unified client starter (takes folder parameter)
-├── cleanup.sh                     # Unified cleanup script (takes folder parameter)
-├── requirements.txt               # Python dependencies
-├── websocket_helpers.py           # Shared WebSocket utilities (SigV4 auth, presigned URLs)
-├── agent_role.json               # IAM role policy template
-├── trust_policy.json             # IAM trust policy
+├── setup.sh                       # 統一セットアップスクリプト（フォルダパラメータを受け取る）
+├── start_client.sh                # 統一クライアント起動スクリプト（フォルダパラメータを受け取る）
+├── cleanup.sh                     # 統一クリーンアップスクリプト（フォルダパラメータを受け取る）
+├── requirements.txt               # Python依存関係
+├── websocket_helpers.py           # 共有WebSocketユーティリティ（SigV4認証、事前署名付きURL）
+├── agent_role.json               # IAMロールポリシーテンプレート
+├── trust_policy.json             # IAM信頼ポリシー
 │
-├── sonic/                        # Sonic sample (native implementation)
-│   ├── client/                   # Web-based client
-│   │   ├── sonic-client.html     # HTML UI with voice selection
-│   │   ├── client.py             # Web server
-│   │   └── requirements.txt      # Client dependencies
-│   ├── websocket/                # Server implementation
-│   │   ├── server.py             # Sonic WebSocket server
-│   │   ├── s2s_session_manager.py # Session management
-│   │   ├── s2s_events.py         # Event handling
-│   │   ├── Dockerfile            # Container definition
-│   │   └── requirements.txt      # Server dependencies
-│   └── setup_config.json         # Generated by setup.sh
+├── sonic/                        # Sonicサンプル（ネイティブ実装）
+│   ├── client/                   # Webベースのクライアント
+│   │   ├── sonic-client.html     # 音声選択付きHTML UI
+│   │   ├── client.py             # Webサーバー
+│   │   └── requirements.txt      # クライアント依存関係
+│   ├── websocket/                # サーバー実装
+│   │   ├── server.py             # Sonic WebSocketサーバー
+│   │   ├── s2s_session_manager.py # セッション管理
+│   │   ├── s2s_events.py         # イベント処理
+│   │   ├── Dockerfile            # コンテナ定義
+│   │   └── requirements.txt      # サーバー依存関係
+│   └── setup_config.json         # setup.shによって生成
 │
-├── strands/                      # Strands sample (framework-based)
-│   ├── client/                   # Web-based client
+├── strands/                      # Strandsサンプル（フレームワークベース）
+│   ├── client/                   # Webベースのクライアント
 │   │   ├── strands-client.html   # HTML UI
-│   │   ├── client.py             # Web server
-│   │   └── requirements.txt      # Client dependencies
-│   ├── websocket/                # Server implementation
-│   │   ├── server.py             # Strands BidiAgent server
-│   │   ├── Dockerfile            # Container definition
-│   │   └── requirements.txt      # Server dependencies
-│   └── setup_config.json         # Generated by setup.sh
+│   │   ├── client.py             # Webサーバー
+│   │   └── requirements.txt      # クライアント依存関係
+│   ├── websocket/                # サーバー実装
+│   │   ├── server.py             # Strands BidiAgentサーバー
+│   │   ├── Dockerfile            # コンテナ定義
+│   │   └── requirements.txt      # サーバー依存関係
+│   └── setup_config.json         # setup.shによって生成
 │
-└── echo/                         # Echo sample (testing)
-    ├── client/                   # CLI client
-    │   └── client.py             # Echo test client
-    ├── websocket/                # Server implementation
-    │   ├── server.py             # Echo WebSocket server
-    │   ├── Dockerfile            # Container definition
-    │   └── requirements.txt      # Server dependencies
-    └── setup_config.json         # Generated by setup.sh
+└── echo/                         # Echoサンプル（テスト）
+    ├── client/                   # CLIクライアント
+    │   └── client.py             # Echoテストクライアント
+    ├── websocket/                # サーバー実装
+    │   ├── server.py             # Echo WebSocketサーバー
+    │   ├── Dockerfile            # コンテナ定義
+    │   └── requirements.txt      # サーバー依存関係
+    └── setup_config.json         # setup.shによって生成
 ```
 
 ---

@@ -1,104 +1,104 @@
-# Implement MCP tools from your APIs using Amazon Bedrock AgentCore Gateway
+# Amazon Bedrock AgentCore Gatewayを使用してAPIからMCPツールを実装する
 
-## Overview
-Bedrock AgentCore Gateway provides customers a way to turn their existing APIs (OpenAPI and Smithy) into fully-managed MCP servers without needing to manage infra or hosting. Customers can bring their existing OpenAPI and Smithy specs to convert their tools. Gateway will provide a uniform Model Context Protocol (MCP) interface across all these tools. Gateway employs a dual authentication model to ensure secure access control for both incoming requests and outbound connections to target resources. The framework consists of two key components: Inbound Auth, which validates and authorizes users attempting to access gateway targets, and Outbound Auth, which enables the gateway to securely connect to backend APIs on behalf of authenticated users using API key, Oauth token and AWS IAM role.
+## 概要
+Bedrock AgentCore Gatewayは、お客様が既存のAPI（OpenAPIとSmithy）を完全管理型のMCPサーバーに変換する方法を提供し、インフラやホスティングの管理を必要としません。お客様は既存のOpenAPIとSmithy仕様を持ち込んで、ツールを変換できます。Gatewayは、これらすべてのツールにわたって統一されたModel Context Protocol（MCP）インターフェースを提供します。Gatewayは、着信リクエストとターゲットリソースへのアウトバウンド接続の両方に対して安全なアクセス制御を確保するために、デュアル認証モデルを採用しています。フレームワークは2つの主要コンポーネントで構成されています：Gatewayターゲットにアクセスしようとするユーザーを検証および承認するInbound Authと、APIキー、OAuthトークン、AWS IAMロールを使用して認証されたユーザーに代わってバックエンドAPIに安全に接続できるようにするOutbound Authです。
 
-![How does it work](images/apis-into-mcp-gateway.png)
+![動作の仕組み](images/apis-into-mcp-gateway.png)
 
 
-## Defining concepts
+## 概念の定義
 
-Before starting, let us define a couple of important concepts for getting started with Amazon Bedrock AgentCore Gateway:
-You can group your OpenAPI or Smithy APIs and create Bedrock AgentCore Gateway Target. A target is a resource that you use to logically group your APIs and attach to your AmazonCore Gateway. 
+開始する前に、Amazon Bedrock AgentCore Gatewayを開始するための重要な概念をいくつか定義しましょう：
+OpenAPIまたはSmithy APIをグループ化して、Bedrock AgentCore Gatewayターゲットを作成できます。ターゲットは、APIを論理的にグループ化し、AmazonCore Gatewayにアタッチするために使用するリソースです。
 
-## Grouping your APIs into Gateway targets
+## APIをGatewayターゲットにグループ化する
 
-Below are the best practices on grouping your APIs into Gateway target -
-* Group your MCP tools based on Agentic application's business domain similar to Domain Driven Design principles applicable to microservices paradigm.
-* You can attach only one resource credentials provider for outbound authorization for the Gateway target. Group the tools based on the outbound authorizer.
-* Group your apis based on the type of the APIs i.e OpenAPI, Smithy, or AWS Lambda serving as a bridge to other enterprise APIs.
+APIをGatewayターゲットにグループ化するためのベストプラクティスは以下のとおりです：
+* マイクロサービスパラダイムに適用されるドメイン駆動設計の原則と同様に、エージェントアプリケーションのビジネスドメインに基づいてMCPツールをグループ化します。
+* Gatewayターゲットのアウトバウンド認証には、リソース認証情報プロバイダーを1つだけアタッチできます。アウトバウンドオーソライザーに基づいてツールをグループ化します。
+* APIのタイプ、つまりOpenAPI、Smithy、または他のエンタープライズAPIへのブリッジとして機能するAWS Lambdaに基づいてAPIをグループ化します。
 
-![Grouping the API tools into targets](images/api-groups-targets.png)
+![APIツールをターゲットにグループ化](images/api-groups-targets.png)
 
-## Best practices
+## ベストプラクティス
 
-1. Documentation Quality Guidelines
-- Write clear, descriptive summaries for each API endpoint and resource
-- Use natural language descriptions that explain the purpose and functionality
-- Include real-world use cases in the descriptions
-- Avoid technical jargon unless necessary
-- Ensure consistent terminology throughout documentation
+1. ドキュメント品質ガイドライン
+- 各APIエンドポイントとリソースの明確で説明的な要約を記述する
+- 目的と機能を説明する自然言語の説明を使用する
+- 説明に実際のユースケースを含める
+- 必要でない限り技術的な専門用語を避ける
+- ドキュメント全体で一貫した用語を確保する
 
-2. Schema Documentation
-- Provide detailed descriptions for all fields
-- Include field constraints and validation rules
-- Document data types precisely
-- Add examples for complex data structures
-- Explain relationships between different schemas
+2. スキーマドキュメント
+- すべてのフィールドの詳細な説明を提供する
+- フィールドの制約と検証ルールを含める
+- データ型を正確に文書化する
+- 複雑なデータ構造の例を追加する
+- 異なるスキーマ間の関係を説明する
 
-3. OpenAPI Specification best practices
-- Validate specs using OpenAPI linters
-- Ensure proper semantic versioning
-- Include complete request/response examples
-- Document error responses and codes
-- Add security scheme definitions
+3. OpenAPI仕様のベストプラクティス
+- OpenAPIリンターを使用して仕様を検証する
+- 適切なセマンティックバージョニングを確保する
+- 完全なリクエスト/レスポンスの例を含める
+- エラーレスポンスとコードを文書化する
+- セキュリティスキーム定義を追加する
 
-4. Tools search optimization
-- Include relevant keywords naturally in descriptions
-- Provide context about when to use each API
-- Document alternative approaches or related endpoints
-- Include business domain terminology
+4. ツール検索の最適化
+- 説明に適切なキーワードを自然に含める
+- 各APIを使用するタイミングについてコンテキストを提供する
+- 代替アプローチまたは関連エンドポイントを文書化する
+- ビジネスドメインの用語を含める
 
-5. API extraction guidelines
-- Identify core functionality needed for agent tasks
-- Create focused API subsets based on use cases
-- Maintain semantic relationships between extracted APIs
-- Preserve security definitions and common schemas
-- Document dependencies between extracted components
+5. API抽出ガイドライン
+- エージェントタスクに必要なコア機能を特定する
+- ユースケースに基づいて焦点を絞ったAPIサブセットを作成する
+- 抽出されたAPI間のセマンティック関係を維持する
+- セキュリティ定義と共通スキーマを保持する
+- 抽出されたコンポーネント間の依存関係を文書化する
 
-6. Monolithic API Extraction Process:
-- Review full OpenAPI specification
-- Map agent use cases to specific endpoints and Auth requirements
-- Extract relevant paths and schemas
-- Maintain component dependencies
-- Validate extracted specification
-- Test semantic search effectiveness
+6. モノリシックAPI抽出プロセス：
+- 完全なOpenAPI仕様を確認する
+- エージェントのユースケースを特定のエンドポイントと認証要件にマッピングする
+- 関連するパスとスキーマを抽出する
+- コンポーネントの依存関係を維持する
+- 抽出された仕様を検証する
+- セマンティック検索の有効性をテストする
 
-Remember to regularly review and update documentation as APIs evolve, maintaining the quality and accuracy of the agents.
+APIが進化するにつれて、エージェントの品質と正確性を維持しながら、定期的にドキュメントを確認および更新することを忘れないでください。
 
-## Inbound and outbound authorization 
-Bedrock AgentCore Gateway provides secure connections via inbound and outbound authentication. For the inbound authentication, the AgentCore Gateway analyzes the OAuth token passed during invocation to decide allow or deny the access to a tool in the gateway. If a tool needs access to external resources, the AgentCore Gateway can use outbound authentication via API Key, IAM or OAuth Token to allow or deny the access to the external resource.
+## インバウンドとアウトバウンド認証
+Bedrock AgentCore Gatewayは、インバウンド認証とアウトバウンド認証を通じて安全な接続を提供します。インバウンド認証の場合、AgentCore Gatewayは呼び出し中に渡されたOAuthトークンを分析して、Gateway内のツールへのアクセスを許可または拒否することを決定します。ツールが外部リソースへのアクセスを必要とする場合、AgentCore GatewayはAPIキー、IAM、またはOAuthトークンを使用したアウトバウンド認証を使用して、外部リソースへのアクセスを許可または拒否できます。
 
-During the inbound authorization flow, an agent or the MCP client calls an MCP tool in the AgentCore Gateway adding an OAuth access token (generated from the user’s IdP). AgentCore Gateway then validates the OAuth access token and performs inbound authorization.
+インバウンド認証フロー中、エージェントまたはMCPクライアントは、OAuthアクセストークン（ユーザーのIdPから生成）を追加してAgentCore Gateway内のMCPツールを呼び出します。AgentCore Gatewayは、OAuthアクセストークンを検証し、インバウンド認証を実行します。
 
-If the tool running in AgentCore Gateway needs to access external resources, OAuth will retrieve credentials of downstream resources using the resource credential provider for the Gateway target. AgentCore Gateway pass the authorization credentials to the caller to get access to the downstream API. 
+AgentCore Gatewayで実行されているツールが外部リソースにアクセスする必要がある場合、OAuthはGatewayターゲットのリソース認証情報プロバイダーを使用してダウンストリームリソースの認証情報を取得します。AgentCore Gatewayは、ダウンストリームAPIにアクセスするために認証情報を呼び出し元に渡します。
 
-![Secure access](../images/gateway_secure_access.png)
+![安全なアクセス](../images/gateway_secure_access.png)
 
-### Tutorial Details
+### チュートリアルの詳細
 
-| Information          | Details                                                   |
-|:---------------------|:----------------------------------------------------------|
-| Tutorial type        | Interactive                                               |
-| AgentCore components | AgentCore Gateway, AgentCore Identity                     |
-| Agentic Framework    | Strands Agents                                            |
-| LLM model            | Anthropic Claude Haiku 4.5, Amazon Nova Pro              |
-| Tutorial components  | Creating AgentCore Gateway and Invoking AgentCore Gateway |
-| Tutorial vertical    | Cross-vertical                                            |
-| Example complexity   | Easy                                                      |
-| SDK used             | boto3                                                     |
+| 情報                | 詳細                                                       |
+|:--------------------|:-----------------------------------------------------------|
+| チュートリアルタイプ | インタラクティブ                                           |
+| AgentCoreコンポーネント | AgentCore Gateway、AgentCore Identity                      |
+| エージェントフレームワーク | Strands Agents                                            |
+| LLMモデル           | Anthropic Claude Haiku 4.5、Amazon Nova Pro              |
+| チュートリアルコンポーネント | AgentCore Gatewayの作成とAgentCore Gatewayの呼び出し      |
+| チュートリアル垂直領域 | クロス垂直領域                                             |
+| 例の複雑さ          | 簡単                                                       |
+| 使用SDK             | boto3                                                     |
 
-## Tutorial Architecture
+## チュートリアルアーキテクチャ
 
-### Tutorial Key Features
+### チュートリアルの主要機能
 
-* Convert OpenAPI apis into MCP tools
-* Convert Smithy models into MCP tools
+* OpenAPI APIをMCPツールに変換する
+* SmithyモデルをMCPツールに変換する
 
-### Tutorials Overview
+### チュートリアルの概要
 
-In these tutorials we will cover the following functionality:
+これらのチュートリアルでは、以下の機能について説明します：
 
-- [Transform your OpenAPIs into MCP tools](01-transform-openapi-into-mcp-tools)
-- [Transform your Smithy models into MCP tools](02-transform-smithyapis-into-mcp-tools)
+- [OpenAPIをMCPツールに変換する](01-transform-openapi-into-mcp-tools)
+- [SmithyモデルをMCPツールに変換する](02-transform-smithyapis-into-mcp-tools)
 

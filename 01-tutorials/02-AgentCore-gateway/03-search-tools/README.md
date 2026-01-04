@@ -1,33 +1,31 @@
-# Amazon Bedrock AgentCore Gateway - Semantic search
+# Amazon Bedrock AgentCore Gateway - セマンティック検索
 
-## Tutorial Architecture
+## チュートリアルアーキテクチャ
 
-Amazon Bedrock AgentCore Gateway provides unified connectivity between agents and the tools and resources they need to interact with. Gateway plays multiple roles in this connectivity layer:
+Amazon Bedrock AgentCore Gatewayは、エージェントと、エージェントが対話する必要があるツールおよびリソース間の統一された接続性を提供します。Gatewayは、この接続レイヤーで複数の役割を果たします：
 
-1. **Security Guard**: Gateway manages OAuth authorization to ensure only valid users / agents access tools / resources.
-2. **Translator**: Gateway translates agent requests made using popular protocols like the Model Context Protocol (MCP) into API requests and Lambda invocations. This means developers don’t need to host servers, manage protocol integration, version support, version patching, etc.
-3. **Composer**: Gateway enables developers to seamlessly combine multiple APIs, functions, and tools into a single MCP  endpoint that an agent can use.
-4. **Keychain**: Gateway handles the injection of the right credentials to use with the right tool, ensuring that agents can seamlessly leverage tools that require different sets of credentials.
-5. **Researcher**: Gateway enables agents to search across all of their tools to find only the ones that are best for a given context or question. This allows agents to make use of 1000s of tools instead of just a handful. It also minimizes the set of tools that need to be provided in an agent’s LLM prompt, reducing latency and cost.
-6. **Infrastructure Manager**: Gateway is completely serverless, and comes with built-in observability and auditing, alleviating the need for developers to manage additional infrastructure to integrate their agents and tools.
+1. **セキュリティガード**: GatewayはOAuth認証を管理し、有効なユーザー/エージェントのみがツール/リソースにアクセスできるようにします。
+2. **翻訳者**: Gatewayは、Model Context Protocol（MCP）などの一般的なプロトコルを使用して行われたエージェントリクエストをAPIリクエストとLambda呼び出しに変換します。これにより、開発者はサーバーをホストしたり、プロトコル統合、バージョンサポート、バージョンパッチなどを管理する必要がなくなります。
+3. **コンポーザー**: Gatewayは、開発者が複数のAPI、関数、ツールをシームレスに組み合わせて、エージェントが使用できる単一のMCPエンドポイントにできるようにします。
+4. **キーチェーン**: Gatewayは、適切なツールで使用する適切な認証情報の注入を処理し、エージェントが異なる認証情報セットを必要とするツールをシームレスに活用できるようにします。
+5. **研究者**: Gatewayは、エージェントがすべてのツールを検索して、特定のコンテキストまたは質問に最適なツールのみを見つけることができるようにします。これにより、エージェントは少数のツールだけでなく、数千のツールを活用できます。また、エージェントのLLMプロンプトで提供する必要があるツールのセットを最小限に抑え、レイテンシとコストを削減します。
+6. **インフラストラクチャマネージャー**: Gatewayは完全にサーバーレスで、組み込みの可観測性と監査機能を備えており、開発者がエージェントとツールを統合するための追加のインフラストラクチャを管理する必要を軽減します。
 
-![How does it work](images/gw-arch-overview.png)
+![動作の仕組み](images/gw-arch-overview.png)
 
-## AgentCore Gateway helps solve the challenge of MCP servers that have large numbers of tools
+## AgentCore Gatewayは、多数のツールを持つMCPサーバーの課題を解決するのに役立ちます
 
-In a typical enterprise setting, agent builders encounter MCP servers that have hundreds or even thousands
-of MCP tools. This volume of tools poses challenges for AI agents, including poor tool selection accuracy, increased cost, and higher latency driven by higher token usage from excessive tool metadata.
-This can happen when connecting your agents to third party services (e.g., Zendesk, Salesforce,
-Slack, JIRA, ...), or to existing enterprise REST services. AgentCore Gateway provides a built in semantic search across tools, which improves agent latency, cost, and accuracy, while still giving those agents the tools they need. Depending on your use case, LLM model, and agent framework, you can see up to 3x better latency by keeping an agent focused on relevant tools versus providing the full set of hundreds of tools from a typical MCP Server.
+典型的なエンタープライズ環境では、エージェントビルダーは数百または数千のMCPツールを持つMCPサーバーに遭遇します。このツールの量は、ツール選択の精度の低下、コストの増加、過剰なツールメタデータからの高いトークン使用量によって引き起こされる高いレイテンシなど、AIエージェントに課題をもたらします。
+これは、エージェントをサードパーティサービス（例：Zendesk、Salesforce、Slack、JIRAなど）または既存のエンタープライズRESTサービスに接続する際に発生する可能性があります。AgentCore Gatewayは、ツール全体にわたる組み込みのセマンティック検索を提供し、エージェントのレイテンシ、コスト、精度を向上させながら、エージェントが必要なツールを提供します。ユースケース、LLMモデル、エージェントフレームワークに応じて、典型的なMCPサーバーから数百のツールの完全なセットを提供するのではなく、エージェントを関連するツールに集中させることで、最大3倍のレイテンシの改善が見られます。
 
-![How does it work](images/gateway_tool_search.png)
+![動作の仕組み](images/gateway_tool_search.png)
 
-## Tutorials Overview
+## チュートリアルの概要
 
-In these tutorials we will cover the following functionality:
+これらのチュートリアルでは、以下の機能について説明します：
 
-- Creating Amazon Bedrock AgentCore Gateways with AWS Lambda-backed targets
-- Using AgentCore Gateway semantic search
-- Using Strands Agents to show how AgentCore Gateway search improves latency
+- AWS Lambdaバックエンドターゲットを使用したAmazon Bedrock AgentCore Gatewayの作成
+- AgentCore Gatewayセマンティック検索の使用
+- AgentCore Gateway検索がレイテンシを改善する方法を示すStrands Agentsの使用
 
-- [Amazon Bedrock AgentCore Gateway - Semantic search](./01-gateway-search.ipynb)
+- [Amazon Bedrock AgentCore Gateway - セマンティック検索](./01-gateway-search.ipynb)

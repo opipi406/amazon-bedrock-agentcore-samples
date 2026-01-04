@@ -1,0 +1,14 @@
+{
+  "permissions": {
+    "allow": [
+      "NotebookEdit",
+      "NotebookRead"
+    ]
+  },
+  "enabledMcpjsonServers": [
+    "context7",
+    "serena",
+    "data-loader-mcp"
+  ],
+  "enableAllProjectMcpServers": true
+}
