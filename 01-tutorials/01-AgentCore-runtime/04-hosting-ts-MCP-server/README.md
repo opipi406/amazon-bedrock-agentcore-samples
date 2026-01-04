@@ -1,49 +1,49 @@
-# TypeScript MCP Server on Amazon Bedrock AgentCore
+# Amazon Bedrock AgentCore 上の TypeScript MCP サーバー
 
-## Overview
+## 概要
 
-This tutorial demonstrates how to host a TypeScript-based MCP (Model Context Protocol) server using the Amazon Bedrock AgentCore runtime environment.
+このチュートリアルでは、Amazon Bedrock AgentCore ランタイム環境を使用して TypeScript ベースの MCP（Model Context Protocol）サーバーをホストする方法を説明します。
 
 
-### Tutorial Details
+### チュートリアルの詳細
 
-| Information         | Details                                                   |
-|:--------------------|:----------------------------------------------------------|
-| Tutorial type       | Hosting typescript MCP server                             |
-| Tool type           | MCP server                                                |
-| Tutorial components | Hosting typescript MCP server on AgentCore Runtime        |
-| Tutorial vertical   | Cross-vertical                                            |
-| Example complexity  | Easy                                                      |
-| SDK used            | Anthropic's typescript SDK for MCP                        |
+| 情報               | 詳細                                                       |
+|:-------------------|:-----------------------------------------------------------|
+| チュートリアルタイプ | TypeScript MCP サーバーのホスティング                      |
+| ツールタイプ       | MCP サーバー                                                |
+| チュートリアル構成要素 | AgentCore Runtime 上での TypeScript MCP サーバーのホスティング |
+| チュートリアル垂直領域 | クロス垂直領域                                              |
+| 例の複雑さ         | 簡単                                                        |
+| 使用 SDK           | Anthropic の MCP 用 TypeScript SDK                         |
 
-## Prerequisites
+## 前提条件
 
-- Node.js v22 or later  
-- Docker (for containerization)  
-- Amazon ECR (Elastic Container Registry) for storing Docker images  
-- AWS account with access to Bedrock AgentCore  
+- Node.js v22 以降  
+- Docker（コンテナ化用）  
+- Docker イメージを保存するための Amazon ECR（Elastic Container Registry）  
+- Bedrock AgentCore へのアクセス権を持つ AWS アカウント  
 
 ---
 
-## AgentCore Runtime Service Contract
+## AgentCore Runtime サービス契約
 
-Refer to the [official service contract documentation](https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/runtime-service-contract.html).
+[公式サービス契約ドキュメント](https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/runtime-service-contract.html)を参照してください。
 
-**Runtime configuration:**
-- **Host:** `0.0.0.0`  
-- **Port:** `8000`  
-- **Transport:** Stateless `streamable-http`  
-- **Endpoint Path:** `POST /mcp`  
+**ランタイム設定:**
+- **ホスト:** `0.0.0.0`  
+- **ポート:** `8000`  
+- **トランスポート:** ステートレス `streamable-http`  
+- **エンドポイントパス:** `POST /mcp`  
 
-## Local Development
+## ローカル開発
 
-1. Install dependencies
+1. 依存関係のインストール
 
 ```
 npm install
 ```
 
-2. Set up AWS credentials
+2. AWS 認証情報の設定
 ```
 aws configure
 export AWS_ACCESS_KEY_ID=your_access_key
@@ -51,26 +51,26 @@ export AWS_SECRET_ACCESS_KEY=your_secret_key
 export AWS_REGION=us-east-1
 ```
 
-3. Start server
+3. サーバーの起動
 ```
 npm run start
 ```
 
-4. Test locally using [MCP inspector](https://github.com/modelcontextprotocol/inspector)
+4. [MCP inspector](https://github.com/modelcontextprotocol/inspector) を使用してローカルでテスト
 
 ```
 npx @modelcontextprotocol/inspector
 ```
 
-## Docker Deployment
+## Docker デプロイメント
 
-1. Create ECR Repository
+1. ECR リポジトリの作成
 ```
 aws ecr create-repository --repository-name mcp-server --region us-east-1
 ```
-2. Build and Push Image to ECR
+2. ECR へのイメージのビルドとプッシュ
 ```
-# Get login token
+# ログイントークンの取得
 aws ecr get-login-password --region us-east-1 | \
   docker login --username AWS --password-stdin [account-id].dkr.ecr.us-east-1.amazonaws.com
 
@@ -78,17 +78,17 @@ docker buildx --platform linux/arm64 \
   -t [account-id].dkr.ecr.us-east-1.amazonaws.com/mcp-server:latest --push .
 ```
 
-3. Deploy to Bedrock AgentCore
+3. Bedrock AgentCore へのデプロイ
 
-    - Go to AWS Console → Bedrock → AgentCore → Create Agent
-    - Choose MCP as the protocol
-    - Configure Agent Runtime:
+    - AWS コンソール → Bedrock → AgentCore → Create Agent に移動
+    - プロトコルとして MCP を選択
+    - Agent Runtime の設定:
         - Image URI: [account-id].dkr.ecr.us-east-1.amazonaws.com/mcp-server:latest
-        - Set IAM Permissions for Bedrock model access
-        - Deploy and test in the Agent Sandbox
+        - Bedrock モデルアクセス用の IAM 権限を設定
+        - Agent Sandbox でデプロイしてテスト
 
 
-4. Construct the Encoded ARN MCP URL
+4. エンコードされた ARN MCP URL の構築
 
 ```
 echo "agent_arn" | sed 's/:/%3A/g; s/\//%2F/g'
@@ -98,9 +98,9 @@ echo "agent_arn" | sed 's/:/%3A/g; s/\//%2F/g'
 https://bedrock-agentcore.{region}.amazonaws.com/runtimes/{encoded_arn}/invocations?qualifier=DEFAULT
 ```
 
-5. Use the MCP url with [MCP inspector](https://github.com/modelcontextprotocol/inspector).
+5. [MCP inspector](https://github.com/modelcontextprotocol/inspector) で MCP URL を使用します。
 
-## References
+## 参考文献
 - https://aws.amazon.com/bedrock/agentcore/
 - https://github.com/modelcontextprotocol/typescript-sdk
 - https://github.com/modelcontextprotocol/inspector
